@@ -1,0 +1,1 @@
+# LettuceTalk.Core

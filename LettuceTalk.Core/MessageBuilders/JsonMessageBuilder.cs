@@ -24,7 +24,7 @@ public class JsonMessageBuilder : IMessageBuilder {
     }
 
     public byte[] ToData(Message message) {
-        string jsonString = System.Text.Json.JsonSerializer.Serialize(message);
+        string jsonString = System.Text.Json.JsonSerializer.Serialize(message, message.GetType());
         byte[] jsonData = System.Text.Encoding.UTF8.GetBytes(jsonString);
         byte messageCode = Convert.ToByte(MessageFactory.GetMessageCode(message));
         byte[] messageData = new byte[jsonData.Length+1];

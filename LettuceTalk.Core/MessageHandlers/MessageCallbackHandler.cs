@@ -54,12 +54,11 @@ public abstract class MessageCallbackHandler {
     /// Publishes a <see cref="Message"/> and fires any callbacks that our subscribed
     /// </summary>
     /// <param name="message">the message to publish</param>
-    /// <typeparam name="T">the type of message publishing</typeparam>
-    protected void Publish<T>(T message) where T : Message {
+    protected void Publish(Message message) {
         Type messageType = message.GetType();
         if (!_messageCallbacks.ContainsKey(messageType)) return;
 
-        (_messageCallbacks[messageType] as CallbackHandler<T>).HandleMessage(message);
+        _messageCallbacks[messageType].HandleMessage(message);
     }
 }
 

@@ -7,8 +7,7 @@
     <Title>LettuceTalk Core</Title>
     <Authors>Lettuce Studios</Authors>
     <Description>The core of the LettuceTalk messaging library protocol to handle message serialization and message handling</Description>
-    <AssemblyVersion>1.0.0</AssemblyVersion>
-    <FileVersion>1.0.0</FileVersion>
+    <Version>1.0.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">

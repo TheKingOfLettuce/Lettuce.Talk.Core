@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <TargetFrameworks>net8.0;net6.0;net7.0</TargetFrameworks>
+    <Title>LettuceTalk Core</Title>
+    <Authors>Lettuce Studios</Authors>
+    <Description>The core of the LettuceTalk messaging library protocol to handle message serialization and message handling</Description>
+    <AssemblyVersion>1.0.0</AssemblyVersion>
+    <FileVersion>1.0.0</FileVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugType>pdbonly</DebugType>
+  </PropertyGroup>
+
+</Project>

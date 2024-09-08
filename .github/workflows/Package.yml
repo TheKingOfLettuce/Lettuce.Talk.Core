@@ -1,0 +1,26 @@
+name: Package
+
+on:
+  workflow_call:
+  release:
+    types: [published]
+
+permissions:
+  packages: write
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout LettuceTalk.Core
+      uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    - name: Create Nuget Package
+      run: dotnet pack --configuration Release
+    - name: Push Nuget Package
+      run: dotnet nuget push "LettuceTalk.Core/bin/Release/*.nupkg" --api-key ${{ secrets.GITHUB_TOKEN }} --source "https://nuget.pkg.github.com/TheKingOfLettuce/index.json"

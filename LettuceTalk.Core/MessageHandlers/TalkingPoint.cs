@@ -9,5 +9,7 @@ public class SendMessageArgs {
 }
 
 public abstract class TalkingPoint : MessageCallbackHandler {
+    public TalkingPoint() : base() {}
+
     public abstract bool SendMessage(SendMessageArgs args);
 }

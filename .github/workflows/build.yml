@@ -1,7 +1,6 @@
 name: Build
 
 on:
-  workflow_call:
   push:
     branches: ["**"]
   pull_request:
@@ -9,17 +8,7 @@ on:
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout LettuceTalk.Core
-      uses: actions/checkout@v4
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build Release Config
-      run: dotnet build --no-restore --configuration Release
+    uses: TheKingOfLettuce/LettuceGithubWorkflows/.github/workflows/Build-dotnet.yml@main
+    with:
+      dotnet-version: 8.0.x
+      configuration: Release

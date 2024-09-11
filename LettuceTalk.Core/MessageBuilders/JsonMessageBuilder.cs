@@ -1,12 +1,12 @@
 namespace LettuceTalk.Core.MessageBuilders;
 
+/// <summary>
+/// A <see cref="IMessageBuilder"/> that serializes and deserializes <see cref="Message"/>
+/// by converting to JSON string and then to byte data following the LettuceTalk protocol
+/// </summary>
 public class JsonMessageBuilder : IMessageBuilder {
 
-    /// <summary>
-    /// Converts binary data to a message via JSON, assumes first byte is for message code via LettuceTalk Protocol
-    /// </summary>
-    /// <param name="data">the message data + message code</param>
-    /// <returns>the converted message</returns>
+    /// <inheritdoc/>
     public Message FromData(byte[] data) {
         int messageCode = Convert.ToInt32(data[0]);
         byte[] jsonData = new byte[data.Length-1];
@@ -15,14 +15,19 @@ public class JsonMessageBuilder : IMessageBuilder {
         return FromData(messageCode, jsonData);
     }
 
+    /// <inheritdoc/>
     public Message FromData(int messageCode, byte[] data) {
         Type messageType = MessageFactory.GetMessageType(messageCode);
         string jsonString = System.Text.Encoding.UTF8.GetString(data);
-        Message message = (Message)System.Text.Json.JsonSerializer.Deserialize(jsonString, messageType);
+        Message? message = (Message?)System.Text.Json.JsonSerializer.Deserialize(jsonString, messageType);
+        if (message == null) {
+            throw new Exception("Message failed to deserialize from JSON");
+        }
 
         return message;
     }
 
+    /// <inheritdoc/>
     public byte[] ToData(Message message) {
         string jsonString = System.Text.Json.JsonSerializer.Serialize(message, message.GetType());
         byte[] jsonData = System.Text.Encoding.UTF8.GetBytes(jsonString);

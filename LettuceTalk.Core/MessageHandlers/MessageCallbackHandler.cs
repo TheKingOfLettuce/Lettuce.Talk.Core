@@ -3,7 +3,7 @@ namespace LettuceTalk.Core.MessageHandlers;
 #pragma warning disable CS8602 // null reference, but we can gurantee the callbacks are not null
 
 /// <summary>
-/// Base class for having a collection of message callbacks
+/// A callback handler that can handle a pub/sub system for <see cref="Message"/> types
 /// </summary>
 public abstract class MessageCallbackHandler {
     private Dictionary<Type, CallbackHandlerBase> _messageCallbacks;
@@ -13,7 +13,7 @@ public abstract class MessageCallbackHandler {
     }
 
     /// <summary>
-    /// Subscribes a method to given <see cref="Message"/>
+    /// Subscribes a method from a given <see cref="Message"/>
     /// </summary>
     /// <param name="func">the method to callback to</param>
     /// <typeparam name="T">the message to fire on</typeparam>
@@ -27,7 +27,7 @@ public abstract class MessageCallbackHandler {
     }
 
     /// <summary>
-    /// Unsubscribes a method to given <see cref="Message"/>
+    /// Unsubscribes a method from a given <see cref="Message"/>
     /// </summary>
     /// <param name="func">the method to remove on</param>
     /// <typeparam name="T">the message to fire on</typeparam>
@@ -51,7 +51,7 @@ public abstract class MessageCallbackHandler {
     }
 
     /// <summary>
-    /// Publishes a <see cref="Message"/> and fires any callbacks that our subscribed
+    /// Publishes a <see cref="Message"/> and fires any callbacks that are subscribed
     /// </summary>
     /// <param name="message">the message to publish</param>
     protected void Publish(Message message) {

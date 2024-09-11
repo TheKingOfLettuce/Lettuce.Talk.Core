@@ -15,5 +15,5 @@ public class MessageDataAttribute : Attribute {
 /// <summary>
 /// Base class to inherit from for messages within the LettuceTalk protocol
 /// </summary>
-/// <remarks>Class provides no functionality but is meant to serve as type restrictions</remarks>
+/// <remarks>Class provides no functionality but is meant to provide some type security</remarks>
 public abstract class Message {}

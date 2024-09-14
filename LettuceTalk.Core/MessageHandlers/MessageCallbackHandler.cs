@@ -5,7 +5,7 @@ namespace LettuceTalk.Core.MessageHandlers;
 /// <summary>
 /// A callback handler that can handle a pub/sub system for <see cref="Message"/> types
 /// </summary>
-public abstract class MessageCallbackHandler {
+public class MessageCallbackHandler {
     private Dictionary<Type, CallbackHandlerBase> _messageCallbacks;
 
     public MessageCallbackHandler() {
@@ -54,7 +54,7 @@ public abstract class MessageCallbackHandler {
     /// Publishes a <see cref="Message"/> and fires any callbacks that are subscribed
     /// </summary>
     /// <param name="message">the message to publish</param>
-    protected void Publish(Message message) {
+    public void Publish(Message message) {
         Type messageType = message.GetType();
         if (!_messageCallbacks.ContainsKey(messageType)) return;
 

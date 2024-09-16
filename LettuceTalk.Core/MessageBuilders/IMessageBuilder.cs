@@ -2,7 +2,7 @@ namespace LettuceTalk.Core.MessageBuilders;
 
 /// <summary>
 /// Handles converting a <see cref="Message"/> to and from byte data according to the LettuceTalk spec
-/// The LettuceTalk message spec defines that the byta data is composed of two parts:
+/// The LettuceTalk message spec defines that the byte data is composed of two parts:
 /// the first four bytes represent the integer message code and the rest of the data represents the message data
 /// </summary>
 public interface IMessageBuilder {

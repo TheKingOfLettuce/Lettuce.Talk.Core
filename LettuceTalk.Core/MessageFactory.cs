@@ -82,7 +82,7 @@ public static class MessageFactory {
     private static IMessageBuilder _messageBuilder = new JsonMessageBuilder();
 
     /// <summary>
-    /// Takes an assembly and reads all the derives types of <see cref="Message"/> and assoicates them with the message code in <see cref="MessageDataAttribute"/>
+    /// Takes an assembly and reads all the derives types of <see cref="Message"/> and associates them with the message code in <see cref="MessageDataAttribute"/>
     /// </summary>
     /// <param name="assembly">the assembly to search for <see cref="Message"/></param>
     public static void AssociateAssembly(Assembly assembly) {

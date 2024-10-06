@@ -8,9 +8,9 @@ public class JsonMessageBuilder : IMessageBuilder {
 
     /// <inheritdoc/>
     public Message FromData(byte[] data) {
-        int messageCode = Convert.ToInt32(data[0]);
-        byte[] jsonData = new byte[data.Length-1];
-        Buffer.BlockCopy(data, 1, jsonData, 0, data.Length-1);
+        int messageCode = BitConverter.ToInt32(data, 0);
+        byte[] jsonData = new byte[data.Length-4];
+        Buffer.BlockCopy(data, 4, jsonData, 0, data.Length-4);
         
         return FromData(messageCode, jsonData);
     }
@@ -31,10 +31,10 @@ public class JsonMessageBuilder : IMessageBuilder {
     public byte[] ToData(Message message) {
         string jsonString = System.Text.Json.JsonSerializer.Serialize(message, message.GetType());
         byte[] jsonData = System.Text.Encoding.UTF8.GetBytes(jsonString);
-        byte messageCode = Convert.ToByte(MessageFactory.GetMessageCode(message));
-        byte[] messageData = new byte[jsonData.Length+1];
-        messageData[0] = messageCode;
-        Buffer.BlockCopy(jsonData, 0, messageData, 1, jsonData.Length);
+        byte[] messageCode = BitConverter.GetBytes(MessageFactory.GetMessageCode(message));
+        byte[] messageData = new byte[jsonData.Length+4];
+        Buffer.BlockCopy(messageCode, 0, messageData, 0, 4);
+        Buffer.BlockCopy(jsonData, 0, messageData, 4, jsonData.Length);
 
         return messageData;
     }

@@ -18,6 +18,7 @@ jobs:
       upload-artifact: true
       artifact-name: LettuceTalk.Core_${{ github.ref_name }}
       bin-dir: LettuceTalk.Core
+      project-dir: LettuceTalk.Core
   deploy-package-github:
     uses: TheKingOfLettuce/LettuceGithubWorkflows/.github/workflows/Upload-Nuget-dotnet.yml@main
     needs: create-package-artifact

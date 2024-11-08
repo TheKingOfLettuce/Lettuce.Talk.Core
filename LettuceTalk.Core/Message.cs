@@ -5,10 +5,17 @@ namespace LettuceTalk.Core;
 /// </summary>
 [AttributeUsage(AttributeTargets.Class)]
 public class MessageDataAttribute : Attribute {
-    public readonly int MessageCode;
+    /// <summary>
+    /// Represents an UTF-8 string for the message header
+    /// </summary>
+    public readonly string MessageHeader;
 
-    public MessageDataAttribute(int messageCode) {
-        MessageCode = messageCode;
+    /// <summary>
+    /// Constructs our attribute, taking in the header for the message
+    /// </summary>
+    /// <param name="messageHeader">the header to represent this message, if empty string provided it will use the full message type name</param>
+    public MessageDataAttribute(string messageHeader = "") {
+        MessageHeader = messageHeader;
     }
 }
 

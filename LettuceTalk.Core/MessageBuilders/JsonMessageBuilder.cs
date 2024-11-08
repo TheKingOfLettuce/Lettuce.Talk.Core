@@ -8,16 +8,24 @@ public class JsonMessageBuilder : IMessageBuilder {
 
     /// <inheritdoc/>
     public Message FromData(byte[] data) {
-        int messageCode = BitConverter.ToInt32(data, 0);
-        byte[] jsonData = new byte[data.Length-4];
-        Buffer.BlockCopy(data, 4, jsonData, 0, data.Length-4);
+        int headerLength = BitConverter.ToInt32(data, 0);
+        if (headerLength == 0) {
+            throw new Exception("Received 0 header length in message data");
+        }
+        string messageHeader = System.Text.Encoding.UTF8.GetString(data, 4, headerLength);
+        if (messageHeader == string.Empty) {
+            throw new Exception("Received empty header string in message data");
+        }
+        int jsonDataLength = data.Length-headerLength-4;
+        byte[] jsonData = new byte[jsonDataLength];
+        Buffer.BlockCopy(data, 4+headerLength, jsonData, 0, jsonDataLength);
         
-        return FromData(messageCode, jsonData);
+        return FromData(messageHeader, jsonData);
     }
 
     /// <inheritdoc/>
-    public Message FromData(int messageCode, byte[] data) {
-        Type messageType = MessageFactory.GetMessageType(messageCode);
+    public Message FromData(string messageHeader, byte[] data) {
+        Type messageType = MessageFactory.GetMessageType(messageHeader);
         string jsonString = System.Text.Encoding.UTF8.GetString(data);
         Message? message = (Message?)System.Text.Json.JsonSerializer.Deserialize(jsonString, messageType);
         if (message == null) {
@@ -31,10 +39,14 @@ public class JsonMessageBuilder : IMessageBuilder {
     public byte[] ToData(Message message) {
         string jsonString = System.Text.Json.JsonSerializer.Serialize(message, message.GetType());
         byte[] jsonData = System.Text.Encoding.UTF8.GetBytes(jsonString);
-        byte[] messageCode = BitConverter.GetBytes(MessageFactory.GetMessageCode(message));
-        byte[] messageData = new byte[jsonData.Length+4];
-        Buffer.BlockCopy(messageCode, 0, messageData, 0, 4);
-        Buffer.BlockCopy(jsonData, 0, messageData, 4, jsonData.Length);
+        byte[] messageHeader = System.Text.Encoding.UTF8.GetBytes(MessageFactory.GetMessageHeader(message));
+        byte[] messageHeaderLength = BitConverter.GetBytes(messageHeader.Length);
+
+        byte[] messageData = new byte[jsonData.Length+4+messageHeader.Length];
+        // follow 3 part data spec
+        Buffer.BlockCopy(messageHeaderLength, 0, messageData, 0, 4);
+        Buffer.BlockCopy(messageHeader, 0, messageData, 4, messageHeader.Length);
+        Buffer.BlockCopy(jsonData, 0, messageData, 4+messageHeader.Length, jsonData.Length);
 
         return messageData;
     }

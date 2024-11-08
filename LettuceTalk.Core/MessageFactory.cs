@@ -87,32 +87,51 @@ public static class MessageFactory {
     /// <param name="assembly">the assembly to search for <see cref="Message"/></param>
     public static void AssociateAssembly(Assembly assembly) {
         foreach(Type messageType in assembly.GetTypes().Where(t => t.IsSubclassOf(typeof(Message)))) {
-            MessageDataAttribute? messageData = messageType.GetCustomAttribute<MessageDataAttribute>();
-            if (messageData == null) {
-                continue;
-            }
-
-            if (messageData.MessageHeader != string.Empty)
-                _ = AssociateMessage(messageData.MessageHeader, messageType);
-            else if (messageType.FullName != null)
-                _ = AssociateMessage(messageType.FullName, messageType);
-            else
-                throw new Exception($"Failed to add message type {messageType}, no header provided & could not fetch full name");
+            AssociateMessage(messageType);
         }
     }
 
     /// <summary>
-    /// Manually associates a given message type with a message header
+    /// Manually associates a given message type
+    /// </summary>
+    /// <typeparam name="T">the message type to associate</typeparam>
+    /// <returns>if it was able to associate the message type without collision</returns>
+    public static bool AssociateMessage<T>() where T : Message => AssociateMessage(typeof(T));
+
+    /// <summary>
+    /// Manually associates a given message type
+    /// </summary>
+    /// <param name="messageType">the type of message to be associated</param>
+    /// <returns>if it was able to associate the message type without collision</returns>
+    /// <exception cref="ArgumentException">throws if the FullName is null for the type</exception>
+    public static bool AssociateMessage(Type messageType) {
+        if (!messageType.IsSubclassOf(typeof(Message))) {
+            throw new ArgumentException($"Provided message type is not of type {typeof(Message)}", nameof(messageType));
+        }
+        MessageDataAttribute? messageData = messageType.GetCustomAttribute<MessageDataAttribute>();
+        if (messageData == null) {
+            throw new ArgumentException($"Provided message type is not decorated with {typeof(MessageDataAttribute)}", nameof(messageType));
+        }
+
+        string messageHeader;
+        if (messageData.MessageHeader != string.Empty)
+            messageHeader = messageData.MessageHeader;
+        else {
+            messageHeader = messageType.FullName ?? 
+                throw new ArgumentException("Failed to get full name of message type", nameof(messageType));            
+        }
+        
+
+        return AssociateMessage(messageHeader, messageType);
+    }
+
+    /// <summary>
+    /// Manually associates a given message type with a specific message header
     /// </summary>
     /// <param name="messageHeader">the message header to associate the type with</param>
     /// <param name="messageType">the type of message to be associated</param>
     /// <returns>if it was able to associate the message type without collision</returns>
-    /// <exception cref="ArgumentException">throws if the given type is not derived from <see cref="Message"/></exception>
-    public static bool AssociateMessage(string messageHeader, Type messageType) {
-        if (!messageType.IsSubclassOf(typeof(Message))) {
-            throw new ArgumentException($"Provided message type is not of type {typeof(Message)}", nameof(messageType));
-        }
-
+    private static bool AssociateMessage(string messageHeader, Type messageType) {
         if (_messageMap.Contains(messageHeader)) {
             return false;
         }

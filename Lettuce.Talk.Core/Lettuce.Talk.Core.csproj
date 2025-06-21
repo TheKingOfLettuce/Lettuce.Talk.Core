@@ -7,7 +7,7 @@
     <Title>Lettuce.Talk.Core</Title>
     <Authors>Lettuce Studios</Authors>
     <Description>The core of the LettuceTalk messaging library protocol to handle message serialization and message handling</Description>
-    <Version>2.1.0</Version>
+    <Version>3.0.0</Version>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 

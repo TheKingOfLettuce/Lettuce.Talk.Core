@@ -1,4 +1,4 @@
-namespace LettuceTalk.Core.MessageHandlers;
+namespace Lettuce.Talk.Core.MessageHandlers;
 
 #pragma warning disable CS8602 // null reference, but we can gurantee the callbacks are not null
 

@@ -1,4 +1,4 @@
-namespace LettuceTalk.Core.MessageBuilders;
+namespace Lettuce.Talk.Core.MessageBuilders;
 
 /// <summary>
 /// <para>

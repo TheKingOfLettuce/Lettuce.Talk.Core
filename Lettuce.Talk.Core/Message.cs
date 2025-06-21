@@ -1,4 +1,4 @@
-namespace LettuceTalk.Core;
+namespace Lettuce.Talk.Core;
 
 /// <summary>
 /// Attribute to assoicate meta data with a <see cref="Message"/>

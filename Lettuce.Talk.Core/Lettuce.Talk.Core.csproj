@@ -4,7 +4,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <TargetFrameworks>net8.0;net6.0;net7.0</TargetFrameworks>
-    <Title>LettuceTalk Core</Title>
+    <Title>Lettuce.Talk.Core</Title>
     <Authors>Lettuce Studios</Authors>
     <Description>The core of the LettuceTalk messaging library protocol to handle message serialization and message handling</Description>
     <Version>2.1.0</Version>

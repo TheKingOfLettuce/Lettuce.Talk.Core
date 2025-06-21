@@ -1,4 +1,4 @@
-namespace LettuceTalk.Core.MessageHandlers;
+namespace Lettuce.Talk.Core.MessageHandlers;
 
 /// <summary>
 /// A statically wrapped <see cref="MessageCallbackHandler"/> to allow for easier internal communication

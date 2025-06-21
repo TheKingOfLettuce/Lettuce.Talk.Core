@@ -1,4 +1,4 @@
-namespace LettuceTalk.Core.MessageHandlers;
+namespace Lettuce.Talk.Core.MessageHandlers;
 
 /// <summary>
 /// Arguments for sending a message

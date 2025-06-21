@@ -1,9 +1,9 @@
-# LettuceTalk.Core
+# Lettuce.Talk.Core
 *Let Us Talk!*<br>
 A minimalistic messaging protocol to communicate messages internally or a framework to communicate  via inter-process communication (IPC).
 
 ## Quick Start
-`LettuceTalk.Core` is available on [nuget](https://www.nuget.org/packages/LettuceTalk.Core)
+`Lettuce.Talk.Core` is available on [nuget](https://www.nuget.org/packages/Lettuce.Talk.Core)
 
 ### Internal Communication
 The first thing you need to do is create a message by inheriting from `Message`:

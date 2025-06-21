@@ -1,4 +1,4 @@
-namespace LettuceTalk.Core.MessageHandlers;
+namespace Lettuce.Talk.Core.MessageHandlers;
 
 internal abstract class CallbackHandlerBase {
     public abstract void HandleMessage(Message message);

@@ -1,7 +1,7 @@
 using System.Reflection;
-using LettuceTalk.Core.MessageBuilders;
+using Lettuce.Talk.Core.MessageBuilders;
 
-namespace LettuceTalk.Core;
+namespace Lettuce.Talk.Core;
 
 internal class BiDirectionalDictionary<Key, Value> where Key : notnull where Value : notnull {
     private Dictionary<Key, Value> _keyValuePairs;

@@ -1,4 +1,4 @@
-namespace LettuceTalk.Core.MessageBuilders;
+namespace Lettuce.Talk.Core.MessageBuilders;
 
 /// <summary>
 /// A <see cref="IMessageBuilder"/> that serializes and deserializes <see cref="Message"/>
